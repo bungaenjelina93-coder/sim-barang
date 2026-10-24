@@ -40,6 +40,17 @@
         <section id="inventaris">
             <h2>Data Inventaris Barang</h2>
 
+            <!-- PENCARIAN BARANG -->
+            <div class="search-group">
+                <label for="cari-barang">Cari Barang:</label>
+                <input
+                    type="search"
+                    id="cari-barang"
+                    placeholder="Cari kode atau nama barang..."
+                >
+            </div>
+
+            <!-- TABEL INVENTARIS -->
             <table>
                 <thead>
                     <tr>
@@ -124,7 +135,6 @@
                         id="jumlah"
                         name="jumlah"
                         placeholder="Masukkan jumlah barang"
-                        min="1"
                         required
                     >
                 </div>
@@ -150,81 +160,8 @@
         <p>&copy; 2026 SIM-Barang. Sistem Inventaris Barang Jurusan.</p>
     </footer>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        "use strict";
-
-        const form = document.getElementById("form-barang");
-        const daftarBarang = document.getElementById("daftar-barang");
-
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            // Mengambil nilai dari formulir
-            const kode = document.getElementById("kode").value
-                .trim().toUpperCase();
-
-            const nama = document.getElementById("nama").value.trim();
-            const kategori = document.getElementById("kategori").value;
-            const jumlah = Number(document.getElementById("jumlah").value);
-            const kondisi = document.getElementById("kondisi").value;
-
-            // Validasi kode barang
-            if (!/^BRG-\d+$/.test(kode)) {
-                alert("Kode barang harus menggunakan format BRG-001!");
-                return;
-            }
-
-            // Validasi jumlah barang
-            if (!Number.isFinite(jumlah) || jumlah <= 0) {
-                alert("Jumlah barang harus lebih dari 0!");
-                return;
-            }
-
-            // Memeriksa kode barang yang sudah digunakan
-            const kodeTerdaftar = Array.from(
-                daftarBarang.querySelectorAll("tr td:first-child")
-            ).some(function(cell) {
-                return cell.textContent.trim() === kode;
-            });
-
-            if (kodeTerdaftar) {
-                alert("Kode barang sudah terdaftar!");
-                return;
-            }
-
-            // Membuat baris baru
-            const baris = document.createElement("tr");
-
-            const dataBarang = [
-                kode,
-                nama,
-                kategori,
-                jumlah,
-                kondisi
-            ];
-
-            dataBarang.forEach(function(data) {
-                const kolom = document.createElement("td");
-                kolom.textContent = data;
-                baris.appendChild(kolom);
-            });
-
-            // Menambahkan data ke tabel
-            daftarBarang.appendChild(baris);
-
-            // Mengosongkan formulir
-            form.reset();
-
-            // Memberikan notifikasi
-            alert("Data barang berhasil ditambahkan!");
-
-            // Mengarahkan tampilan ke tabel inventaris
-            document.getElementById("inventaris").scrollIntoView({
-                behavior: "smooth"
-            });
-        });
-    </script>
+    <!-- JAVASCRIPT EKSTERNAL -->
+    <script src="main.js"></script>
 
 </body>
 </html>
