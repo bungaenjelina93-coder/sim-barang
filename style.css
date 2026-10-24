@@ -1,0 +1,230 @@
+```css
+/* =================================
+   1. RESET CSS
+================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =================================
+   2. PENGATURAN DASAR
+================================= */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6fb;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* =================================
+   3. HEADER
+================================= */
+header {
+    background-color: #142d4e;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+/* =================================
+   4. NAVIGASI (FLEXBOX)
+================================= */
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    background-color: #1e416d;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #a9d6ff;
+}
+
+/* =================================
+   5. KONTEN UTAMA
+================================= */
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* =================================
+   6. SECTION (BOX MODEL)
+================================= */
+section {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* =================================
+   7. JUDUL
+================================= */
+h2 {
+    color: #142d4e;
+    margin-bottom: 15px;
+}
+
+/* =================================
+   8. TABEL INVENTARIS
+================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #1e416d;
+    color: white;
+}
+
+/* =================================
+   9. FORM INPUT (CSS GRID)
+================================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* =================================
+   10. TOMBOL
+================================= */
+.form-grid button {
+    grid-column: 1 / -1;
+    padding: 14px;
+    background-color: #1e416d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-grid button:hover {
+    background-color: #142d4e;
+}
+
+/* =================================
+   11. FOOTER
+================================= */
+footer {
+    background-color: #142d4e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* =================================
+   12. RESPONSIVE TABLET
+   600px - 1024px
+================================= */
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+
+    main {
+        width: 95%;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+}
+
+/* =================================
+   13. RESPONSIVE MOBILE
+   Di bawah 600px
+================================= */
+@media screen and (max-width: 599px) {
+
+    header {
+        padding: 20px 10px;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    main {
+        width: 95%;
+        margin: 15px auto;
+    }
+
+    section {
+        padding: 15px;
+    }
+
+    /* Form menjadi satu kolom */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid button {
+        grid-column: auto;
+    }
+
+    /* Tabel menyesuaikan layar */
+    #inventaris {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 500px;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 7px;
+    }
+
+    footer {
+        font-size: 13px;
+    }
+
+}
+

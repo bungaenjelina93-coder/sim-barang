@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIM-Barang - Sistem Inventaris</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -49,7 +51,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="daftar-barang">
                     <tr>
                         <td>BRG-001</td>
                         <td>Laptop</td>
@@ -81,59 +83,60 @@
         <section id="input-barang">
             <h2>Formulir Input Barang</h2>
 
-            <form action="#" method="post">
+            <form id="form-barang" class="form-grid">
 
-                <label for="kode">Kode Barang:</label>
-                <input
-                    type="text"
-                    id="kode"
-                    name="kode"
-                    placeholder="Contoh: BRG-004"
-                    required
-                >
+                <div class="form-group">
+                    <label for="kode">Kode Barang:</label>
+                    <input
+                        type="text"
+                        id="kode"
+                        name="kode"
+                        placeholder="Contoh: BRG-004"
+                        required
+                    >
+                </div>
 
-                <br><br>
+                <div class="form-group">
+                    <label for="nama">Nama Barang:</label>
+                    <input
+                        type="text"
+                        id="nama"
+                        name="nama"
+                        placeholder="Masukkan nama barang"
+                        required
+                    >
+                </div>
 
-                <label for="nama">Nama Barang:</label>
-                <input
-                    type="text"
-                    id="nama"
-                    name="nama"
-                    placeholder="Masukkan nama barang"
-                    required
-                >
+                <div class="form-group">
+                    <label for="kategori">Kategori:</label>
+                    <select id="kategori" name="kategori" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="Elektronik">Elektronik</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Peralatan">Peralatan</option>
+                    </select>
+                </div>
 
-                <br><br>
+                <div class="form-group">
+                    <label for="jumlah">Jumlah Barang:</label>
+                    <input
+                        type="number"
+                        id="jumlah"
+                        name="jumlah"
+                        placeholder="Masukkan jumlah barang"
+                        min="1"
+                        required
+                    >
+                </div>
 
-                <label for="kategori">Kategori:</label>
-                <select id="kategori" name="kategori" required>
-                    <option value="">Pilih Kategori</option>
-                    <option value="Elektronik">Elektronik</option>
-                    <option value="Furniture">Furniture</option>
-                    <option value="Peralatan">Peralatan</option>
-                </select>
-
-                <br><br>
-
-                <label for="jumlah">Jumlah Barang:</label>
-                <input
-                    type="number"
-                    id="jumlah"
-                    name="jumlah"
-                    placeholder="Masukkan jumlah barang"
-                    required
-                >
-
-                <br><br>
-
-                <label for="kondisi">Kondisi Barang:</label>
-                <select id="kondisi" name="kondisi" required>
-                    <option value="">Pilih Kondisi</option>
-                    <option value="Baik">Baik</option>
-                    <option value="Rusak">Rusak</option>
-                </select>
-
-                <br><br>
+                <div class="form-group">
+                    <label for="kondisi">Kondisi Barang:</label>
+                    <select id="kondisi" name="kondisi" required>
+                        <option value="">Pilih Kondisi</option>
+                        <option value="Baik">Baik</option>
+                        <option value="Rusak">Rusak</option>
+                    </select>
+                </div>
 
                 <button type="submit">Simpan Barang</button>
 
@@ -146,6 +149,82 @@
     <footer>
         <p>&copy; 2026 SIM-Barang. Sistem Inventaris Barang Jurusan.</p>
     </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        "use strict";
+
+        const form = document.getElementById("form-barang");
+        const daftarBarang = document.getElementById("daftar-barang");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Mengambil nilai dari formulir
+            const kode = document.getElementById("kode").value
+                .trim().toUpperCase();
+
+            const nama = document.getElementById("nama").value.trim();
+            const kategori = document.getElementById("kategori").value;
+            const jumlah = Number(document.getElementById("jumlah").value);
+            const kondisi = document.getElementById("kondisi").value;
+
+            // Validasi kode barang
+            if (!/^BRG-\d+$/.test(kode)) {
+                alert("Kode barang harus menggunakan format BRG-001!");
+                return;
+            }
+
+            // Validasi jumlah barang
+            if (!Number.isFinite(jumlah) || jumlah <= 0) {
+                alert("Jumlah barang harus lebih dari 0!");
+                return;
+            }
+
+            // Memeriksa kode barang yang sudah digunakan
+            const kodeTerdaftar = Array.from(
+                daftarBarang.querySelectorAll("tr td:first-child")
+            ).some(function(cell) {
+                return cell.textContent.trim() === kode;
+            });
+
+            if (kodeTerdaftar) {
+                alert("Kode barang sudah terdaftar!");
+                return;
+            }
+
+            // Membuat baris baru
+            const baris = document.createElement("tr");
+
+            const dataBarang = [
+                kode,
+                nama,
+                kategori,
+                jumlah,
+                kondisi
+            ];
+
+            dataBarang.forEach(function(data) {
+                const kolom = document.createElement("td");
+                kolom.textContent = data;
+                baris.appendChild(kolom);
+            });
+
+            // Menambahkan data ke tabel
+            daftarBarang.appendChild(baris);
+
+            // Mengosongkan formulir
+            form.reset();
+
+            // Memberikan notifikasi
+            alert("Data barang berhasil ditambahkan!");
+
+            // Mengarahkan tampilan ke tabel inventaris
+            document.getElementById("inventaris").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    </script>
 
 </body>
 </html>
