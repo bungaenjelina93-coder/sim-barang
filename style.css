@@ -228,3 +228,120 @@ footer {
 
 }
 
+/* =================================
+   HALAMAN LOGIN SIM-BARANG
+================================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f2f4;
+}
+
+/* HEADER LOGIN */
+.login-header {
+    width: 100%;
+    background-color: #233f8a;
+    color: white;
+    text-align: center;
+    padding: 20px 15px;
+}
+
+.login-header h1 {
+    color: white;
+    margin-bottom: 5px;
+    font-size: 25px;
+}
+
+.login-header p {
+    font-size: 12px;
+}
+
+/* KONTEN LOGIN */
+.login-main {
+    width: 100%;
+    max-width: none;
+    flex: 1;
+    margin: 0;
+    padding: 30px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* KARTU LOGIN */
+.login-card {
+    width: 100%;
+    max-width: 350px;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.login-card h2 {
+    color: #233f8a;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* FORM LOGIN */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.login-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login-form label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 9px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 9px;
+    background-color: #2349a9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.login-form button:hover {
+    background-color: #18377f;
+}
+
+/* PESAN ERROR */
+.login-error {
+    color: #dc3545;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* FOOTER LOGIN */
+.login-footer {
+    width: 100%;
+    background-color: #233f8a;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 12px;
+}
+
+

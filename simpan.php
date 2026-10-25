@@ -1,6 +1,8 @@
 
 <?php
 
+require_once __DIR__ . "/Barang.php";
+
 // Memastikan data dikirim menggunakan metode POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: index.html");
@@ -57,6 +59,9 @@ $berhasil = empty($errors);
 
 if ($berhasil) {
     $totalHarga = $jumlah * $harga;
+
+    // Membuat objek dari class Barang
+    $barang = new Barang($kode, $nama, $jumlah);
 }
 
 // Fungsi mengamankan teks sebelum ditampilkan
@@ -137,6 +142,11 @@ function aman($data) {
 
                 <p>Data barang berhasil diterima dan dihitung menggunakan PHP.</p>
 
+                <p>
+                    <strong>Informasi dari Class Barang:</strong>
+                    <?= aman($barang->tampilkanInfo()) ?>
+                </p>
+
             <?php else: ?>
 
                 <h2>Data Tidak Valid</h2>
@@ -148,7 +158,7 @@ function aman($data) {
             <?php endif; ?>
 
             <p>
-                <a href="index.html">Kembali ke Formulir SIM-Barang</a>
+                <a href="index.php">Kembali ke Formulir SIM-Barang</a>
             </p>
 
         </section>

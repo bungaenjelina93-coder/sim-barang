@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// Memeriksa apakah pengguna sudah login
+if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
+    header("Location: login.php");
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -21,6 +30,7 @@
         <a href="#beranda">Beranda</a>
         <a href="#inventaris">Data Inventaris</a>
         <a href="#input-barang">Input Barang</a>
+        <a href="logout.php">Logout</a>
     </nav>
 
     <!-- KONTEN UTAMA -->
