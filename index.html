@@ -94,7 +94,7 @@
         <section id="input-barang">
             <h2>Formulir Input Barang</h2>
 
-            <form id="form-barang" class="form-grid">
+            <form id="form-barang" class="form-grid" action="simpan.php" method="POST">
 
                 <div class="form-group">
                     <label for="kode">Kode Barang:</label>
@@ -138,7 +138,16 @@
                         required
                     >
                 </div>
-
+                <div class="form-group">
+                    <label for="harga">Harga Satuan:</label>
+                    <input
+                        type="number"
+                        id="harga"
+                        name="harga"
+                        placeholder="Masukkan harga satuan"
+                        required
+                    >           
+                </div>
                 <div class="form-group">
                     <label for="kondisi">Kondisi Barang:</label>
                     <select id="kondisi" name="kondisi" required>
