@@ -1,11 +1,31 @@
+
 <?php
 session_start();
 
-// Memeriksa apakah pengguna sudah login
+// Melindungi halaman agar hanya bisa dibuka setelah login
 if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
     header("Location: login.php");
     exit;
 }
+
+// Menghubungkan ke database
+require_once __DIR__ . "/koneksi.php";
+
+// Mengambil data barang dan kategori dari MySQL
+$sql = "SELECT
+            barang.kode_barang,
+            barang.nama_barang,
+            barang.jumlah,
+            barang.harga_satuan,
+            barang.kondisi,
+            kategori.nama_kategori
+        FROM barang
+        INNER JOIN kategori
+            ON barang.id_kategori = kategori.id_kategori
+        ORDER BY barang.id_barang ASC";
+
+$stmt = $pdo->query($sql);
+$daftarBarang = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +80,7 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
                 >
             </div>
 
-            <!-- TABEL INVENTARIS -->
+            <!-- TABEL INVENTARIS DARI MYSQL -->
             <table>
                 <thead>
                     <tr>
@@ -73,29 +93,43 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
                 </thead>
 
                 <tbody id="daftar-barang">
-                    <tr>
-                        <td>BRG-001</td>
-                        <td>Laptop</td>
-                        <td>Elektronik</td>
-                        <td>10</td>
-                        <td>Baik</td>
-                    </tr>
 
-                    <tr>
-                        <td>BRG-002</td>
-                        <td>Printer</td>
-                        <td>Elektronik</td>
-                        <td>5</td>
-                        <td>Baik</td>
-                    </tr>
+                    <?php if (!empty($daftarBarang)): ?>
 
-                    <tr>
-                        <td>BRG-003</td>
-                        <td>Meja</td>
-                        <td>Furniture</td>
-                        <td>8</td>
-                        <td>Rusak</td>
-                    </tr>
+                        <?php foreach ($daftarBarang as $barang): ?>
+
+                            <tr>
+                                <td>
+                                    <?= htmlspecialchars($barang["kode_barang"], ENT_QUOTES, "UTF-8") ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($barang["nama_barang"], ENT_QUOTES, "UTF-8") ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($barang["nama_kategori"], ENT_QUOTES, "UTF-8") ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($barang["jumlah"], ENT_QUOTES, "UTF-8") ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($barang["kondisi"], ENT_QUOTES, "UTF-8") ?>
+                                </td>
+                            </tr>
+
+                        <?php endforeach; ?>
+
+                    <?php else: ?>
+
+                        <tr>
+                            <td colspan="5">Belum ada data barang.</td>
+                        </tr>
+
+                    <?php endif; ?>
+
                 </tbody>
             </table>
         </section>
@@ -104,7 +138,12 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
         <section id="input-barang">
             <h2>Formulir Input Barang</h2>
 
-            <form id="form-barang" class="form-grid" action="simpan.php" method="POST">
+            <form
+                id="form-barang"
+                class="form-grid"
+                action="simpan.php"
+                method="POST"
+            >
 
                 <div class="form-group">
                     <label for="kode">Kode Barang:</label>
@@ -112,7 +151,7 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
                         type="text"
                         id="kode"
                         name="kode"
-                        placeholder="Contoh: BRG-004"
+                        placeholder="Contoh: BRG-006"
                         required
                     >
                 </div>
@@ -148,6 +187,7 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
                         required
                     >
                 </div>
+
                 <div class="form-group">
                     <label for="harga">Harga Satuan:</label>
                     <input
@@ -156,8 +196,9 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
                         name="harga"
                         placeholder="Masukkan harga satuan"
                         required
-                    >           
+                    >
                 </div>
+
                 <div class="form-group">
                     <label for="kondisi">Kondisi Barang:</label>
                     <select id="kondisi" name="kondisi" required>
@@ -176,7 +217,10 @@ if (!isset($_SESSION["login"]) || $_SESSION["login"] !== true) {
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 SIM-Barang. Sistem Inventaris Barang Jurusan.</p>
+        <p>
+            &copy; 2026 SIM-Barang.
+            Sistem Inventaris Barang Jurusan.
+        </p>
     </footer>
 
     <!-- JAVASCRIPT EKSTERNAL -->
